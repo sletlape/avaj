@@ -1,0 +1,7 @@
+This is a test of reading
+this file line by
+line to see
+
+how to read
+a
+file in Java.
