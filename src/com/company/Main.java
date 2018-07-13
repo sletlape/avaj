@@ -1,5 +1,9 @@
 package com.company;
 
+import Aircrafts.Aircraft;
+import Aircrafts.AircraftFactory;
+import Aircrafts.Flyable;
+
 import java.io.*;
 /*import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -10,7 +14,7 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
-        File inFile = null;
+        File inFile;
         BufferedReader br = null;
         String line;
 
@@ -42,16 +46,34 @@ public class Main {
                     }
 
                     if (i > 0)
-                    {//Split by spacing and send to factory
-                        String[] sendToFactory = line.split(" ");
-                        /*type*/System.out.println(sendToFactory[0]);
-                        /*name*/System.out.println(sendToFactory[1]);
-                        /*long*/System.out.println(sendToFactory[2]);
-                        /*lati*/System.out.println(sendToFactory[3]);
-                        /*high*/System.out.println(sendToFactory[4]);
+                    {///Split by spacing and send to factory to create flyMachine with initial values
+                        String[] sendToFactory  =   line.split(" ");
+
+                        String  type            =   sendToFactory[0];
+                        String  name            =   sendToFactory[1];
+                        int     longitude       =   Integer.parseInt(sendToFactory[2]);
+                        int     latitude        =   Integer.parseInt(sendToFactory[3]);
+                        int     height          =   Integer.parseInt(sendToFactory[4]);
+
+                //        Flyable flyMachine = new AircraftFactory(type, name, longitude, latitude, height);
+
+                        //testing
+                        /*type*/System.out.println(type);
+                        /*name*/System.out.println(name);
+                        /*long*/System.out.println(longitude);
+                        /*lati*/System.out.println(latitude);
+                        /*high*/System.out.println(height);
                         /*Divide*/System.out.println(".........................");
                     }
                     i++;
+                    ///done creating flyMachines;
+                }
+                //simulate conditions here on each .
+                while (sims-- > 0)
+                {
+                    System.out.println("Simulation number " + sims);
+                    //update conditions for each flyMachine.
+                    //use idCounter to alter conditions for all flyMachines.
                 }
             }catch (IOException io_ex){
                 System.out.println(io_ex.getMessage() + " Unable to read line");
