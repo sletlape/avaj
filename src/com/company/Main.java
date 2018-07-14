@@ -15,8 +15,8 @@ public class Main {
 
     public static void main(String[] args) {
         File inFile;
-        BufferedReader br = null;
         String line;
+        BufferedReader br = null;
 
         System.out.println("Inside " + args[0]);
 
@@ -33,10 +33,8 @@ public class Main {
             try {
                 int i = 0;
                 int sims = 0;
-                while ((line = br.readLine()) != null)
-                {
-                    if (i == 0)
-                    {
+                while ((line = br.readLine()) != null){
+                    if (i == 0){
                         try {
                             sims = Integer.parseInt(line);
                         }catch (Exception intParse_ex){
@@ -45,8 +43,8 @@ public class Main {
                         }
                     }
 
-                    if (i > 0)
-                    {///Split by spacing and send to factory to create flyMachine with initial values
+                    if (i > 0){
+                        ///Split by spacing and send to factory to create flyMachine with initial values
                         String[] sendToFactory  =   line.split(" ");
 
                         String  type            =   sendToFactory[0];
@@ -66,11 +64,10 @@ public class Main {
                         /*Divide*/System.out.println(".........................");
                     }
                     i++;
-                    ///done creating flyMachines;
+                    ///done creating flyMachines and counting them.;
                 }
                 //simulate conditions here on each .
-                while (sims-- > 0)
-                {
+                while (sims-- > 0){
                     System.out.println("Simulation number " + sims);
                     //update conditions for each flyMachine.
                     //use idCounter to alter conditions for all flyMachines.
@@ -78,10 +75,8 @@ public class Main {
             }catch (IOException io_ex){
                 System.out.println(io_ex.getMessage() + " Unable to read line");
             }
-        }
-        else
-        {
-            System.out.println("Only 1 argument allowed");
+        }else{
+            System.out.println("This program takes 1 and only one argument from the command line!");
         }
     }
  }
