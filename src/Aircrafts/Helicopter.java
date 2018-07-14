@@ -1,7 +1,6 @@
 package Aircrafts;
 
 import Tower.WeatherTower;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class Helicopter extends Aircraft implements Flyable{
 
@@ -9,13 +8,28 @@ public class Helicopter extends Aircraft implements Flyable{
 
     Helicopter(String name, Coordinates coordinates) {
         super(name, coordinates);
+        System.out.println("My ID is: "+super.id);
     }
 
     public void updateConditions() {
-        throw new NotImplementedException();
+
+        String weather = weatherTower.getWeather(coordinates);
+        switch (weather){
+            case "SUN":     this.coordinates.setLongitude(this.coordinates.getLongitude() + 10);
+                            this.coordinates.setHeight(this.coordinates.getHeight() + 2);
+                            break;
+            case "RAIN":    this.coordinates.setLongitude(this.coordinates.getLongitude() + 5);
+                            break;
+            case "FOG":     this.coordinates.setLongitude(this.coordinates.getLongitude() + 1);
+                            break;
+            case "Snow":    this.coordinates.setHeight(this.coordinates.getHeight() + 12);
+                            break;
+        }
     }
 
     public void registerTower(WeatherTower weatherTower){
-        throw new NotImplementedException();
+
+        this.weatherTower = weatherTower;
+        weatherTower.register(this);
     }
 }

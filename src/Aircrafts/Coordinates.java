@@ -13,6 +13,8 @@ public class Coordinates {
     }
 
     public void setLongitude(int longitude) {
+        if(longitude < 0)
+            longitude = 0;
         this.longitude = longitude;
     }
 
@@ -21,6 +23,8 @@ public class Coordinates {
     }
 
     public void setLatitude(int latitude) {
+        if (latitude < 0)
+            latitude = 0;
         this.latitude = latitude;
     }
 
@@ -29,6 +33,10 @@ public class Coordinates {
     }
 
     public void setHeight(int height) {
+        if (height > 100)
+            height = 100;
+        if (height < 0)
+            height = 0;
         this.height = height;
     }
 }

@@ -1,14 +1,22 @@
 package Aircrafts;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 public class AircraftFactory {
-    public Flyable newAircraft(String type, String name, int longitude, int latitude, int height){
-        /*Creates the aircrafts and gives them initial coordinates*/
-        throw new NotImplementedException();
-/*
-        if (type == "Helicopter")
-            return (new Helicopter(name, Coordinates(longitude, latitude, height)));
-*/
+
+    public static Flyable newAircraft(String type, String name, int longitude, int latitude, int height){
+
+        Coordinates coordinates = new Coordinates(longitude, latitude, height);
+        if (type.equals("Helicopter")) {
+            System.out.println("Creating Helli");
+            return (new Helicopter(name, coordinates));
+        }
+        if (type.equals("Baloon")) {
+            System.out.println("Creating Balloon");
+            return (new Baloon(name, coordinates));
+        }
+        if (type.equals("JetPlane")) {
+            System.out.println("Creating Jet");
+            return (new JetPlane(name, coordinates));
+        }
+        return null;
     }
 }

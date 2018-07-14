@@ -1,6 +1,5 @@
 package com.company;
 
-import Aircrafts.Aircraft;
 import Aircrafts.AircraftFactory;
 import Aircrafts.Flyable;
 
@@ -18,10 +17,9 @@ public class Main {
         String line;
         BufferedReader br = null;
 
-        System.out.println("Inside " + args[0]);
+       // System.out.println("Inside " + args[0]);
 
-        if (args.length == 1)
-        {
+        if (args.length == 1){
             inFile = new File(args[0]);
             try {
                 br = new BufferedReader(new FileReader(inFile));
@@ -32,13 +30,17 @@ public class Main {
 
             try {
                 int i = 0;
-                int sims = 0;
+                int sims;
                 while ((line = br.readLine()) != null){
                     if (i == 0){
                         try {
                             sims = Integer.parseInt(line);
+                            if (sims < 1){
+                                System.out.println("You need to run at least one simulation.");
+                                break;
+                            }
                         }catch (Exception intParse_ex){
-                            System.out.println(intParse_ex.getMessage() + " Unabel to convert first line to int!");
+                            System.out.println(intParse_ex.getMessage() + " Unable to convert first line to int!");
                             break;
                         }
                     }
@@ -47,32 +49,24 @@ public class Main {
                         ///Split by spacing and send to factory to create flyMachine with initial values
                         String[] sendToFactory  =   line.split(" ");
 
-                        String  type            =   sendToFactory[0];
-                        String  name            =   sendToFactory[1];
-                        int     longitude       =   Integer.parseInt(sendToFactory[2]);
-                        int     latitude        =   Integer.parseInt(sendToFactory[3]);
-                        int     height          =   Integer.parseInt(sendToFactory[4]);
+                        String  type        =   sendToFactory[0];
+                        String  name        =   sendToFactory[1];
+                        int     longitude   =   Integer.parseInt(sendToFactory[2]);
+                        int     latitude    =   Integer.parseInt(sendToFactory[3]);
+                        int     height      =   Integer.parseInt(sendToFactory[4]);
 
-                //        Flyable flyMachine = new AircraftFactory(type, name, longitude, latitude, height);
-
-                        //testing
-                        /*type*/System.out.println(type);
-                        /*name*/System.out.println(name);
-                        /*long*/System.out.println(longitude);
-                        /*lati*/System.out.println(latitude);
-                        /*high*/System.out.println(height);
-                        /*Divide*/System.out.println(".........................");
+                        Flyable flyMachine = AircraftFactory.newAircraft(type, name, longitude, latitude, height);
                     }
                     i++;
                     ///done creating flyMachines and counting them.;
                 }
-                //simulate conditions here on each .
+               /* //simulate conditions here on each .
                 while (sims-- > 0){
                     System.out.println("Simulation number " + sims);
                     //update conditions for each flyMachine.
                     //use idCounter to alter conditions for all flyMachines.
                 }
-            }catch (IOException io_ex){
+            */}catch (IOException io_ex){
                 System.out.println(io_ex.getMessage() + " Unable to read line");
             }
         }else{
