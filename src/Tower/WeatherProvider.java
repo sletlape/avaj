@@ -12,7 +12,10 @@ public class WeatherProvider {
         weather = new String[] {"Fog","Rain","Snow","Sun"};
     }
 
-    static public WeatherProvider getProvider(){
+    static public WeatherProvider getProvider()
+    {
+        if (weatherProvider == null)
+            weatherProvider = new WeatherProvider();
         return weatherProvider;
     }
 
@@ -22,6 +25,7 @@ public class WeatherProvider {
         int randomNumber = rnd.nextInt(weather.length);
         String randomWeather =  weather[randomNumber];
 
+        //filter types of weather at different coordinates recursively
         if ((coordinates.getHeight() > 50) && (coordinates.getLatitude() < 20) && (coordinates.getLongitude() > 5)){
             return randomWeather.equals("Fog") ? getCurrentWeather(coordinates) : randomWeather;
         }

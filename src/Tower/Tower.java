@@ -13,12 +13,13 @@ public class Tower {
         System.out.println("Tower says: " + flyReg.getType() + "#"+flyReg.getName()+"("+flyReg.getId()+") registered to Weather tower");
     }
 
-    public void unrggitster(Flyable flyable){
+    public void unregitster(Flyable flyable){
         observers.remove(flyable);
+        Aircraft flyUnReg = (Aircraft)flyable;
+        System.out.println("Tower says: " + flyUnReg.getType() + "#"+flyUnReg.getName()+"("+flyUnReg.getId()+") unregistered from Weather tower");
     }
 
     protected void  conditionsChanged() {
-
         for (Flyable flyable: observers) {
             flyable.updateConditions();
         }

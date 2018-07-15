@@ -15,6 +15,8 @@ public class Main {
 
     public static void main(String[] args) {
         File inFile;
+        String fileName;
+        String ext;
         String line;
         BufferedReader br = null;
 
@@ -22,6 +24,17 @@ public class Main {
 
         if (args.length == 1){
             inFile = new File(args[0]);
+
+            fileName = inFile.getName();
+            int indexOfExt = fileName.lastIndexOf('.');
+
+            ext = fileName.substring(indexOfExt+1);
+
+            if (!(ext.equals("txt") || (ext.equals("md5")))){
+                System.out.println("Extension is not supported... Only txt and MD5 is supported");
+                System.exit(0);
+            }
+
             try {
                 br = new BufferedReader(new FileReader(inFile));
             }catch (FileNotFoundException fnf_ex){
@@ -62,6 +75,9 @@ public class Main {
                         Flyable flyMachine = AircraftFactory.newAircraft(type, name, longitude, latitude, height);
                         //Register to tower.
                         flyMachine.registerTower(overWatch);
+
+                        //update supposed to be done on the tower... during the loop
+                        flyMachine.updateConditions();
                     }
                     i++;
                     ///done creating flyMachines and counting them.;
