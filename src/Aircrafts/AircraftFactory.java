@@ -6,16 +6,19 @@ public class AircraftFactory {
 
         Coordinates coordinates = new Coordinates(longitude, latitude, height);
         if (type.equals("Helicopter")) {
-            System.out.println("Creating Helli");
-            return (new Helicopter(name, coordinates));
+            Helicopter tmpH = new Helicopter(name, coordinates);
+            tmpH.setType(type);
+            return tmpH;
         }
         if (type.equals("Baloon")) {
-            System.out.println("Creating Balloon");
-            return (new Baloon(name, coordinates));
+            Baloon tmpB = new Baloon(name, coordinates);
+            tmpB.setType(type);
+            return tmpB;
         }
         if (type.equals("JetPlane")) {
-            System.out.println("Creating Jet");
-            return (new JetPlane(name, coordinates));
+            JetPlane tmpJ = new JetPlane(name, coordinates);
+            tmpJ.setType(type);
+            return tmpJ;
         }
         return null;
     }

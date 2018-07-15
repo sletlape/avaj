@@ -2,6 +2,7 @@ package com.company;
 
 import Aircrafts.AircraftFactory;
 import Aircrafts.Flyable;
+import Tower.WeatherTower;
 
 import java.io.*;
 /*import java.io.BufferedReader;
@@ -46,6 +47,8 @@ public class Main {
                     }
 
                     if (i > 0){
+
+                        WeatherTower overWatch = new WeatherTower();
                         ///Split by spacing and send to factory to create flyMachine with initial values
                         String[] sendToFactory  =   line.split(" ");
 
@@ -55,7 +58,10 @@ public class Main {
                         int     latitude    =   Integer.parseInt(sendToFactory[3]);
                         int     height      =   Integer.parseInt(sendToFactory[4]);
 
+                        //create aircraft
                         Flyable flyMachine = AircraftFactory.newAircraft(type, name, longitude, latitude, height);
+                        //Register to tower.
+                        flyMachine.registerTower(overWatch);
                     }
                     i++;
                     ///done creating flyMachines and counting them.;

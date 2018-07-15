@@ -8,11 +8,9 @@ public class Helicopter extends Aircraft implements Flyable{
 
     Helicopter(String name, Coordinates coordinates) {
         super(name, coordinates);
-        System.out.println("My ID is: "+super.id);
     }
 
     public void updateConditions() {
-
         String weather = weatherTower.getWeather(coordinates);
         switch (weather){
             case "SUN":     this.coordinates.setLongitude(this.coordinates.getLongitude() + 10);
@@ -28,8 +26,9 @@ public class Helicopter extends Aircraft implements Flyable{
     }
 
     public void registerTower(WeatherTower weatherTower){
-
         this.weatherTower = weatherTower;
         weatherTower.register(this);
     }
+
+
 }
