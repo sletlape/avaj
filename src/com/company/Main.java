@@ -30,6 +30,7 @@ public class Main {
 
             ext = fileName.substring(indexOfExt+1);
 
+            //Cannot interpret MD5 yet
             if (!(ext.equals("txt") || (ext.equals("md5")))){
                 System.out.println("Extension is not supported... Only txt and MD5 is supported");
                 System.exit(0);
