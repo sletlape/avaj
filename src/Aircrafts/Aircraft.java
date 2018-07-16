@@ -34,4 +34,8 @@ public class Aircraft {
     public String getName() {
         return name;
     }
+
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
 }

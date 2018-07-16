@@ -20,8 +20,23 @@ public class Tower {
     }
 
     protected void  conditionsChanged() {
-        for (Flyable flyable: observers) {
+
+        Iterator<Flyable> iterator = observers.iterator();
+
+        while (iterator.hasNext())
+        {
+            Flyable flyable = iterator.next();
             flyable.updateConditions();
+            Aircraft air = (Aircraft)flyable;
+            if (air.getCoordinates().getHeight() == 0) {
+                iterator.remove();
+                unregitster(flyable);
+            }
+        }
+
+        if (observers.size() == 0) {
+            System.out.println("\nAll aircrafts have landed successfully!");
+            System.exit(0);
         }
     }
 }

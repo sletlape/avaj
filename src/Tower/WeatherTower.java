@@ -1,7 +1,6 @@
 package Tower;
 
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import Aircrafts.Coordinates;
 
 public class WeatherTower extends Tower {
@@ -10,6 +9,6 @@ public class WeatherTower extends Tower {
     }
 
     void ChangeWeather() {
-        throw new NotImplementedException();
+        conditionsChanged();
     }
 }

@@ -1,8 +1,7 @@
-package com.company;
+package Tower;
 
 import Aircrafts.AircraftFactory;
 import Aircrafts.Flyable;
-import Tower.WeatherTower;
 
 import java.io.*;
 /*import java.io.BufferedReader;
@@ -19,8 +18,8 @@ public class Main {
         String ext;
         String line;
         BufferedReader br = null;
-
-       // System.out.println("Inside " + args[0]);
+        WeatherTower overWatch = new WeatherTower();
+        Flyable flyMachine;
 
         if (args.length == 1){
             inFile = new File(args[0]);
@@ -31,8 +30,8 @@ public class Main {
             ext = fileName.substring(indexOfExt+1);
 
             //Cannot interpret MD5 yet
-            if (!(ext.equals("txt") || (ext.equals("md5")))){
-                System.out.println("Extension is not supported... Only txt and MD5 is supported");
+            if (!(ext.equals("txt") )){
+                System.out.println("Extension is not supported... Only txt is supported");
                 System.exit(0);
             }
 
@@ -45,7 +44,7 @@ public class Main {
 
             try {
                 int i = 0;
-                int sims;
+                int sims = 0;
                 while ((line = br.readLine()) != null){
                     if (i == 0){
                         try {
@@ -62,38 +61,50 @@ public class Main {
 
                     if (i > 0){
 
-                        WeatherTower overWatch = new WeatherTower();
                         ///Split by spacing and send to factory to create flyMachine with initial values
                         String[] sendToFactory  =   line.split(" ");
 
                         String  type        =   sendToFactory[0];
                         String  name        =   sendToFactory[1];
-                        int     longitude   =   Integer.parseInt(sendToFactory[2]);
-                        int     latitude    =   Integer.parseInt(sendToFactory[3]);
-                        int     height      =   Integer.parseInt(sendToFactory[4]);
+                        int     longitude   =   0;
+                        int     latitude    =   0;
+                        int     height      =   0;
+
+                        if (!(type.equals("Baloon") || type.equals("JetPlane") ||type.equals("Helicopter") )){
+                            System.out.println(type+" is an unknown type. Exiting program now");
+                            System.exit(0);
+                        }
+
+                        try {
+                            longitude   =   Integer.parseInt(sendToFactory[2]);
+                            latitude    =   Integer.parseInt(sendToFactory[3]);
+                            height      =   Integer.parseInt(sendToFactory[4]);
+                        }catch (Exception intParse_ex){
+                            System.out.println(intParse_ex + "Cannot find or convert coordinates");
+                            System.exit(0);
+                        }
+
 
                         //create aircraft
-                        Flyable flyMachine = AircraftFactory.newAircraft(type, name, longitude, latitude, height);
+                        flyMachine = AircraftFactory.newAircraft(type, name, longitude, latitude, height);
                         //Register to tower.
                         flyMachine.registerTower(overWatch);
-
-                        //update supposed to be done on the tower... during the loop
-                        flyMachine.updateConditions();
                     }
                     i++;
                     ///done creating flyMachines and counting them.;
                 }
-               /* //simulate conditions here on each .
+                //simulate conditions here on each .
                 while (sims-- > 0){
-                    System.out.println("Simulation number " + sims);
-                    //update conditions for each flyMachine.
-                    //use idCounter to alter conditions for all flyMachines.
+                    overWatch.ChangeWeather();
+
                 }
-            */}catch (IOException io_ex){
+            }catch (IOException io_ex){
                 System.out.println(io_ex.getMessage() + " Unable to read line");
-            }
+                System.exit(0);
+        }
         }else{
             System.out.println("This program takes 1 and only one argument from the command line!");
+            System.exit(0);
         }
     }
  }
