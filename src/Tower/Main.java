@@ -10,6 +10,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 */
+
 public class Main {
 
     public static void main(String[] args) {
@@ -29,7 +30,6 @@ public class Main {
 
             ext = fileName.substring(indexOfExt+1);
 
-            //Cannot interpret MD5 yet
             if (!(ext.equals("txt") )){
                 System.out.println("Extension is not supported... Only txt is supported");
                 System.exit(0);
@@ -37,12 +37,7 @@ public class Main {
 
             try {
                 br = new BufferedReader(new FileReader(inFile));
-            }catch (FileNotFoundException fnf_ex){
-                System.out.println(fnf_ex.getMessage() + " The file was not found");
-                System.exit(0);
-            }
 
-            try {
                 int i = 0;
                 int sims = 0;
                 while ((line = br.readLine()) != null){
@@ -83,8 +78,6 @@ public class Main {
                             System.out.println(intParse_ex + "Cannot find or convert coordinates");
                             System.exit(0);
                         }
-
-
                         //create aircraft
                         flyMachine = AircraftFactory.newAircraft(type, name, longitude, latitude, height);
                         //Register to tower.
@@ -96,9 +89,14 @@ public class Main {
                 //simulate conditions here on each .
                 while (sims-- > 0){
                     overWatch.ChangeWeather();
-
                 }
-            }catch (IOException io_ex){
+
+            }catch (FileNotFoundException fnf_ex){
+                System.out.println(fnf_ex.getMessage() + " The file was not found");
+                System.exit(0);
+            }
+
+            catch (IOException io_ex){
                 System.out.println(io_ex.getMessage() + " Unable to read line");
                 System.exit(0);
         }
@@ -107,4 +105,4 @@ public class Main {
             System.exit(0);
         }
     }
- }
+}
