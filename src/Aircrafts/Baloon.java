@@ -12,14 +12,18 @@ public class Baloon extends Aircraft implements Flyable {
     public void updateConditions() {
         String weather = weatherTower.getWeather(coordinates);
         switch (weather){
-            case "SUN":     this.coordinates.setLongitude(this.coordinates.getLongitude() + 2);
+            case "SUN":     System.out.println("Its too hot... Going up (+4) and east (+2)");
+                this.coordinates.setLongitude(this.coordinates.getLongitude() + 2);
                 this.coordinates.setHeight(this.coordinates.getHeight() + 4);
                 break;
-            case "RAIN":    this.coordinates.setHeight(this.coordinates.getHeight() - 5);
+            case "RAIN":    System.out.println("I can't stand the rain, Going down (-5)");
+                this.coordinates.setHeight(this.coordinates.getHeight() - 5);
                 break;
-            case "FOG":     this.coordinates.setHeight(this.coordinates.getHeight() - 3);
+            case "FOG":     System.out.println("Ouch, this for hurts... Going down (-3)");
+                this.coordinates.setHeight(this.coordinates.getHeight() - 3);
                 break;
-            case "Snow":    this.coordinates.setHeight(this.coordinates.getHeight() - 15);
+            case "Snow":    System.out.println("Okay, this is getting bad... Going down (-15)");
+                this.coordinates.setHeight(this.coordinates.getHeight() - 15);
                 break;
         }
         if (this.coordinates.getHeight() ==  0){
