@@ -21,11 +21,12 @@ public class Helicopter extends Aircraft implements Flyable{
             case "RAIN":    System.out.println("I'm getting wet... Longitude (+5)");
                         this.coordinates.setLongitude(this.coordinates.getLongitude() + 5);
                         break;
-            case "FOG":     System.out.println("Its too hot... Going up (+4) and Longitude (+2)");
+            case "FOG":     System.out.println("This stings... Longitude (+1)");
                         this.coordinates.setLongitude(this.coordinates.getLongitude() + 1);
                         break;
-            case "Snow":    this.coordinates.setHeight(this.coordinates.getHeight() - 12);
-                            break;
+            case "Snow":    System.out.println("This is no fly... Height (-12)");
+                        this.coordinates.setHeight(this.coordinates.getHeight() - 12);
+                        break;
         }
 
         if (this.coordinates.getHeight() ==  0){
