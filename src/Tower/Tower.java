@@ -21,7 +21,7 @@ public class Tower {
 
     protected void  conditionsChanged() {
 
-        Iterator<Flyable> iterator = observers.iterator();
+        /*Iterator<Flyable> iterator = observers.iterator();
 
         while (iterator.hasNext())
         {
@@ -32,7 +32,20 @@ public class Tower {
                 iterator.remove();
                 unregitster(flyable);
             }
+        }*/
+        for (int i =0; i< observers.size();i++)
+        {
+            observers.get(i).updateConditions();
+            Aircraft air = (Aircraft)observers.get(i);
+            if (air.getCoordinates().getHeight() == 0)
+            {
+                unregitster(observers.get(i));
+                observers.remove(i);
+                i--;
+            }
         }
+
+
 
         if (observers.size() == 0) {
             System.out.println("\nAll aircrafts have landed successfully!");
