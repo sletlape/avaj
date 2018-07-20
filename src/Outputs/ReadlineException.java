@@ -1,6 +1,8 @@
 package Outputs;
 
-public class ReadlineException extends Exception {
+import java.io.IOException;
+
+public class ReadlineException extends IOException {
     public ReadlineException(){
         super("Error: Cannot read line!");
     }

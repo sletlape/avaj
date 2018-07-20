@@ -12,14 +12,18 @@ public class JetPlane extends Aircraft implements Flyable {
     public void updateConditions(){
         String weather = weatherTower.getWeather(coordinates);
         switch (weather){
-            case "SUN":     this.coordinates.setLatitude(this.coordinates.getLatitude() + 10);
+            case "SUN": System.out.println(this.getType() + "#"+this.getName()+"("+this.getId()+"): The weather today is a scorcher... Height (+2) and Longitude (+10)");
+                this.coordinates.setLatitude(this.coordinates.getLatitude() + 10);
                 this.coordinates.setHeight(this.coordinates.getHeight() + 2);
                 break;
-            case "RAIN":    this.coordinates.setLatitude(this.coordinates.getLatitude() + 5);
+            case "RAIN":    System.out.println(this.getType() + "#"+this.getName()+"("+this.getId()+"): A little water can't touch me... Latitude (+5)");
+                this.coordinates.setLatitude(this.coordinates.getLatitude() + 5);
                 break;
-            case "FOG":     this.coordinates.setLatitude(this.coordinates.getLatitude() + 1);
+            case "FOG": System.out.println(this.getType() + "#"+this.getName()+"("+this.getId()+"): Don't dent my body work... Latitude (+1)");
+                this.coordinates.setLatitude(this.coordinates.getLatitude() + 1);
                 break;
-            case "Snow":    this.coordinates.setHeight(this.coordinates.getHeight() - 7);
+            case "Snow":    System.out.println(this.getType() + "#"+this.getName()+"("+this.getId()+"): Some things you just don't risk (-7)");
+                this.coordinates.setHeight(this.coordinates.getHeight() - 7);
                 break;
         }
         if (this.coordinates.getHeight() ==  0){

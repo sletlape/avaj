@@ -14,17 +14,17 @@ public class Helicopter extends Aircraft implements Flyable{
 
         String weather = weatherTower.getWeather(coordinates);
         switch (weather){
-            case "SUN":     System.out.println("Its too hot... Height (+2) and Longitude (+10)");
+            case "SUN":     System.out.println(this.getType() + "#"+this.getName()+"("+this.getId()+"): Nice and sunny... Height (+2) and Longitude (+10)");
                         this.coordinates.setLongitude(this.coordinates.getLongitude() + 10);
                         this.coordinates.setHeight(this.coordinates.getHeight() + 2);
                         break;
-            case "RAIN":    System.out.println("I'm getting wet... Longitude (+5)");
+            case "RAIN":    System.out.println(this.getType() + "#"+this.getName()+"("+this.getId()+"): I'm getting wet... Longitude (+5)");
                         this.coordinates.setLongitude(this.coordinates.getLongitude() + 5);
                         break;
-            case "FOG":     System.out.println("This stings... Longitude (+1)");
+            case "FOG":     System.out.println(this.getType() + "#"+this.getName()+"("+this.getId()+"): This stings... Longitude (+1)");
                         this.coordinates.setLongitude(this.coordinates.getLongitude() + 1);
                         break;
-            case "Snow":    System.out.println("This is no fly... Height (-12)");
+            case "Snow":    System.out.println(this.getType() + "#"+this.getName()+"("+this.getId()+"): This is no fly... Height (-12)");
                         this.coordinates.setHeight(this.coordinates.getHeight() - 12);
                         break;
         }
