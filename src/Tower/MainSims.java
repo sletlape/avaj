@@ -39,6 +39,7 @@ public class MainSims {
 
                 while ((line = br.readLine()) != null){
                     if (lineNb == 1){
+                        //figure out how to get number of sims on any line
                         sims = Integer.parseInt(line);
                         if (sims < 1){
                             System.out.println("You need to run at least one simulation.");
