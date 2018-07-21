@@ -17,13 +17,6 @@ public class WriteToSimFile {
     public WriteToSimFile (String  file_path, boolean append_value){
         path = file_path;
         append_to_file = append_value;
-
-        File newFile = new File(path);
-        try {
-            newFile.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void writeToFile(String textLine) throws IOException{

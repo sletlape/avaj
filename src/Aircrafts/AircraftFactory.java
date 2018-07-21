@@ -20,6 +20,7 @@ public class AircraftFactory {
             tmpJ.setType(type);
             return tmpJ;
         }
+        System.out.println(type + " not a known aircraft type!");
         return null;
     }
 }
