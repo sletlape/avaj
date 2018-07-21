@@ -1,6 +1,9 @@
 package Aircrafts;
 
+import Outputs.WriteToSimFile;
 import Tower.WeatherTower;
+
+import java.io.IOException;
 
 public class Helicopter extends Aircraft implements Flyable{
 
@@ -13,24 +16,31 @@ public class Helicopter extends Aircraft implements Flyable{
     public void updateConditions() {
 
         String weather = weatherTower.getWeather(coordinates);
-        switch (weather){
-            case "SUN":     System.out.println(this.getType() + "#"+this.getName()+"("+this.getId()+"): Nice and sunny... Height (+2) and Longitude (+10)");
-                        this.coordinates.setLongitude(this.coordinates.getLongitude() + 10);
-                        this.coordinates.setHeight(this.coordinates.getHeight() + 2);
-                        break;
-            case "RAIN":    System.out.println(this.getType() + "#"+this.getName()+"("+this.getId()+"): I'm getting wet... Longitude (+5)");
-                        this.coordinates.setLongitude(this.coordinates.getLongitude() + 5);
-                        break;
-            case "FOG":     System.out.println(this.getType() + "#"+this.getName()+"("+this.getId()+"): This stings... Longitude (+1)");
-                        this.coordinates.setLongitude(this.coordinates.getLongitude() + 1);
-                        break;
-            case "Snow":    System.out.println(this.getType() + "#"+this.getName()+"("+this.getId()+"): This is no fly... Height (-12)");
-                        this.coordinates.setHeight(this.coordinates.getHeight() - 12);
-                        break;
-        }
 
-        if (this.coordinates.getHeight() ==  0){
-            System.out.println(this.type+"#"+this.name+"("+this.id+") is landing");
+        try {
+            WriteToSimFile data = new WriteToSimFile("Simulator.txt", true);
+            switch (weather) {
+                case "SUN":
+                    data.writeToFile(this.getType() + "#"+this.getName()+"("+this.getId()+"): Nice and sunny... Height (+2) and Longitude (+10)");
+                    this.coordinates.setLongitude(this.coordinates.getLongitude() + 10);
+                    this.coordinates.setHeight(this.coordinates.getHeight() + 2);
+                    break;
+                case "RAIN":    data.writeToFile(this.getType() + "#"+this.getName()+"("+this.getId()+"): I'm getting wet... Longitude (+5)");
+                    this.coordinates.setLongitude(this.coordinates.getLongitude() + 5);
+                    break;
+                case "FOG":     data.writeToFile(this.getType() + "#"+this.getName()+"("+this.getId()+"): This stings... Longitude (+1)");
+                    this.coordinates.setLongitude(this.coordinates.getLongitude() + 1);
+                    break;
+                case "Snow":    data.writeToFile(this.getType() + "#"+this.getName()+"("+this.getId()+"): This is no fly... Height (-12)");
+                    this.coordinates.setHeight(this.coordinates.getHeight() - 12);
+                    break;
+            }
+
+            if (this.coordinates.getHeight() ==  0){
+                data.writeToFile(this.type+"#"+this.name+"("+this.id+") is landing");
+            }
+        }catch (IOException exWriting){
+            System.out.println(exWriting + ": Error writing to file");
         }
 
     }

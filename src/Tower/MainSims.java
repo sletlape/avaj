@@ -1,7 +1,7 @@
 package Tower;
 
-import Aircrafts.AircraftFactory;
-import Aircrafts.Flyable;
+import Aircrafts.*;
+import Outputs.WriteToSimFile;
 
 import java.io.*;
 
@@ -14,8 +14,8 @@ public class MainSims {
         String writeTo = "Simulator.txt";
         BufferedReader br = null;
         WeatherTower overWatch = new WeatherTower();
-        Flyable flyMachine;
 
+        int simsLine = 0;
         int lineNb = 1;
 
         if (args.length == 1) {
@@ -33,34 +33,57 @@ public class MainSims {
             }
 
             try {
+                //create a file to write to
+                WriteToSimFile data = new WriteToSimFile( writeTo, true );
+
                 br = new BufferedReader(new FileReader(inFile));
 
                 int sims = 0;
 
                 while ((line = br.readLine()) != null){
-                    if (lineNb == 1){
-                        //figure out how to get number of sims on any line
-                        sims = Integer.parseInt(line);
-                        if (sims < 1){
-                            System.out.println("You need to run at least one simulation.");
-                            break;
-                        }
-                    }else{
-                        try{
-                            //Sending the specs to create each aircraft accordingly
-                            if (lineNb > 0){
-                                    getProps(line, overWatch);
+                    if (simsLine == 0 ){
+                        if (!(line.equals(""))){
+                            //figure out how to get number of sims on any line
+                            sims = Integer.parseInt(line);
+
+                            //Writing to file
+                            data.writeToFile("Simulations to be conducted = "+sims+"\n");
+
+                            simsLine = lineNb;
+                            if (sims < 1){
+                                System.out.println("You need to run at least one simulation.");
+                                break;
                             }
-                        }
-                        catch (NumberFormatException toInt_ex){
-                            System.out.println("Cannot find or convert to int coordinates on line " + lineNb);
+                        }else
+                            lineNb++;
+                            continue;
+
+                    }else if (simsLine > 0){
+                        if (!(line.equals(""))){
+
+                            try{
+                                //Sending the specs to create each aircraft accordingly
+                                if (lineNb > 0){
+                                    getProps(line, overWatch);
+                                }
+                            }
+                            catch (NumberFormatException toInt_ex){
+                                System.out.println("Cannot find or convert to int coordinates on line " + lineNb);
+                                lineNb++;
+                                continue;
+                            }
+                        }else{
+                            lineNb++;
                             continue;
                         }
                     }
                     lineNb++;
                 }
                 System.out.println("\n");
-                while (sims-- > 0){
+                for (int i = 0; i < sims; i++){
+                    data.writeToFile( "\n==============================");
+                    data.writeToFile( "    Simulation number "+i);
+                    data.writeToFile( "==============================");
                     overWatch.ChangeWeather();
                 }
             }

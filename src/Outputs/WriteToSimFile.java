@@ -1,5 +1,6 @@
 package Outputs;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,6 +18,12 @@ public class WriteToSimFile {
         path = file_path;
         append_to_file = append_value;
 
+        File newFile = new File(path);
+        try {
+            newFile.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void writeToFile(String textLine) throws IOException{

@@ -2,6 +2,9 @@ package Tower;
 
 import Aircrafts.Aircraft;
 import Aircrafts.Flyable;
+import Outputs.WriteToSimFile;
+
+import java.io.IOException;
 import java.util.*;
 
 public class Tower {
@@ -10,13 +13,25 @@ public class Tower {
     public void register(Flyable flyable){
         observers.add(flyable);
         Aircraft flyReg = (Aircraft)flyable;
-        System.out.println("Tower says: " + flyReg.getType() + "#"+flyReg.getName()+"("+flyReg.getId()+") registered to Weather tower");
+
+        try {
+            WriteToSimFile data = new WriteToSimFile("Simulator.txt", true);
+            data.writeToFile("Tower says: " + flyReg.getType() + "#" + flyReg.getName() + "(" + flyReg.getId() + ") registered to Weather tower");
+        }catch (IOException exWriting){
+            System.out.println(exWriting + ": Error writing to file");
+        }
     }
 
     public void unregitster(Flyable flyable){
         observers.remove(flyable);
         Aircraft flyUnReg = (Aircraft)flyable;
-        System.out.println("Tower says: " + flyUnReg.getType() + "#"+flyUnReg.getName()+"("+flyUnReg.getId()+") unregistered from Weather tower");
+
+        try {
+            WriteToSimFile data = new WriteToSimFile("Simulator.txt", true);
+            data.writeToFile("Tower says: " + flyUnReg.getType() + "#"+flyUnReg.getName()+"("+flyUnReg.getId()+") unregistered from Weather tower");
+        }catch (IOException exWriting){
+            System.out.println(exWriting + ": Error writing to file");
+        }
     }
 
     protected void  conditionsChanged() {
@@ -34,7 +49,12 @@ public class Tower {
         }
 
         if (observers.size() == 0) {
-            System.out.println("\nAll aircrafts have landed successfully!");
+            try {
+                WriteToSimFile data = new WriteToSimFile("Simulator.txt", true);
+                data.writeToFile("\nAll aircrafts have landed successfully!");
+            }catch (IOException exWriting){
+                System.out.println(exWriting + ": Error writing to file");
+            }
             System.exit(0);
         }
     }
