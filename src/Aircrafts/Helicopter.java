@@ -31,13 +31,14 @@ public class Helicopter extends Aircraft implements Flyable{
                 case "FOG":     data.writeToFile(this.getType() + "#"+this.getName()+"("+this.getId()+"): This stings... Longitude (+1)");
                     this.coordinates.setLongitude(this.coordinates.getLongitude() + 1);
                     break;
-                case "Snow":    data.writeToFile(this.getType() + "#"+this.getName()+"("+this.getId()+"): This is no fly... Height (-12)");
+                case "SNOW":    data.writeToFile(this.getType() + "#"+this.getName()+"("+this.getId()+"): This is no fly... Height (-12)");
                     this.coordinates.setHeight(this.coordinates.getHeight() - 12);
                     break;
             }
 
             if (this.coordinates.getHeight() ==  0){
                 data.writeToFile(this.type+"#"+this.name+"("+this.id+") is landing");
+                weatherTower.unregitster(this);
             }
         }catch (IOException exWriting){
             System.out.println(exWriting + ": Error writing to file");

@@ -44,10 +44,19 @@ public class MainSims {
                 //for checking which line the number of sims is on
                 int sims = 0;
 
-                while ((line = br.readLine()) != null){
+                while ((line = br.readLine()) != null) {
                     lineNb++;
-                    if (simsLine == 0 ){
+                    if (simsLine == 0 ) {
                         if (!(line.equals(""))){
+
+                            String[]    sendToFactory   =   line.split(" ");
+                            String      type            =   sendToFactory[0];
+
+                            //fix this error/time out
+                            if ((type.equals("Baloon") || type.equals("JetPlane") ||type.equals("Helicopter")) && sims == 0) {
+                                break;
+                            }
+
                             //figure out how to get number of sims on any line
                             if (isNumber(line))
                                 sims = Integer.parseInt(line);
@@ -57,13 +66,8 @@ public class MainSims {
                             data.writeToFile("Simulations to be conducted = "+sims+"\n");
 
                             simsLine = lineNb;
-                            if (sims < 1){
-                                System.out.println("You need to run at least one simulation.");
-                                break;
-                            }
                         }else
                             continue;
-
                     }else if (simsLine > 0){
                         if (!(line.equals(""))){
 
@@ -82,12 +86,14 @@ public class MainSims {
                         }
                     }
                 }
-                System.out.println("\n");
+
+                if (sims < 1){
+                    System.out.println("You need to run at least one simulation Before creating aircrafts... Bye!!!");
+                }
                 for (int i = 1; i <= sims; i++){
                     data.writeToFile( "\n==============================");
                     data.writeToFile( "    Simulation number "+i);
                     data.writeToFile( "==============================");
-                    ///TODO: re-register all flyables but don't reprint the comments... consider having a list which stores all the initial values of all flyables
 
                     overWatch.ChangeWeather();
                 }
@@ -109,8 +115,7 @@ public class MainSims {
 
 
         for(int i = 0; i < str.length();i++)
-            if(Character.isDigit(str.charAt(i)) == false)
-            {
+            if(Character.isDigit(str.charAt(i)) == false) {
                 return false;
             }
         return true;

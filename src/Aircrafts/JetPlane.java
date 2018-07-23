@@ -31,13 +31,14 @@ public class JetPlane extends Aircraft implements Flyable {
                     data.writeToFile(this.getType() + "#"+this.getName()+"("+this.getId()+"): Don't dent my body work... Latitude (+1)");
                     this.coordinates.setLatitude(this.coordinates.getLatitude() + 1);
                     break;
-                case "Snow":
+                case "SNOW":
                     data.writeToFile(this.getType() + "#"+this.getName()+"("+this.getId()+"): Some things you just don't risk (-7)");
                     this.coordinates.setHeight(this.coordinates.getHeight() - 7);
                     break;
             }
             if (this.coordinates.getHeight() ==  0){
                 data.writeToFile(this.type+"#"+this.name+"("+this.id+") is landing");
+                weatherTower.unregitster(this);
             }
         }catch (IOException exWriting){
             System.out.println(exWriting + ": Error writing to file");
