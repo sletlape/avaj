@@ -27,6 +27,7 @@ public class MainSims {
 
             ext = fileName.substring(indexOfExt + 1);
 
+            //Checking if file has proper extension
             fileType(ext);
 
             try {//create a file to write to
@@ -46,9 +47,9 @@ public class MainSims {
                     if(type.equals("Baloon") || type.equals("JetPlane") ||type.equals("Helicopter"))
                         typeError = false;
                     lineNb++;
-                    if (simsLine == 0 ) {
-                        if (!(line.equals(""))){
-                            //fix this error/time out
+                    if (!line.equals("")){
+                        if (simsLine == 0 ) {
+                            //Get sims in this if
                             if (!typeError && sims == 0) {
                                 break;
                             }
@@ -61,38 +62,26 @@ public class MainSims {
                             }//Writing to file
                             data.writeToFile("Simulations to be conducted = "+sims+"\n");
                             simsLine = lineNb;
-                        }else {
-                            continue;
-                        }
-                    }else if (simsLine > 0){
-                        if (!(line.equals(""))){
+                        }else if (simsLine > 0){
                             try{//Sending the specs to create each aircraft accordingly
                                 if (lineNb > 0){
                                     if (typeError) {
-                                        System.out.println("Line "+lineNb+" is not recognised... cannot manufacture.");
+                                        System.out.println("Line "+lineNb+" is not recognised... cannot manufacture "+type+"\n");
                                         continue;
                                     }
                                     getProps(line, overWatch, lineNb);
                                 }
                             }
                             catch (NumberFormatException toInt_ex){
-                                System.out.println("Cannot find or convert to int coordinates on line " + lineNb);
+                                System.out.println("Cannot find or convert to int coordinates on line " + lineNb+"\n");
                                 continue;
                             }
-                        }else{
-                            continue;
                         }
+                    }else{
+                        continue;
                     }
                 }
-                if (sims < 1){
-                    System.out.println("You need to run at least one simulation Before creating aircrafts... Bye!!!");
-                }
-                for (int i = 1; i <= sims; i++){
-                    data.writeToFile( "\n==============================");
-                    data.writeToFile( "    Simulation number "+i);
-                    data.writeToFile( "==============================");
-                    overWatch.ChangeWeather();
-                }
+                simulate(overWatch, data, sims);
             }
             catch (FileNotFoundException fnf_ex){
                 System.out.println(fnf_ex.getMessage() + " The file was not found");
@@ -104,6 +93,23 @@ public class MainSims {
             System.out.println("This program takes 1 and only one argument from the command line! Program ending now");
             System.exit(0);
         }
+    }
+
+    private static void simulate(WeatherTower overWatch, WriteToSimFile data, int sims) throws IOException {
+        if (sims < 1){
+            System.out.println("You need to run at least one simulation Before creating aircrafts... Bye!!!");
+        }
+        for (int i = 1; i <= sims; i++){
+            data.writeToFile( "\n==============================");
+            data.writeToFile( "    Simulation number "+i);
+            data.writeToFile( "==============================");
+
+            overWatch.ChangeWeather();
+        }
+        System.out.println("**********************************");
+        System.out.println("Done with all " +sims+ " simulations!!!");
+        System.out.println("Results printed to Simulator file");
+        System.out.println("**********************************");
     }
 
     private static void fileType(String ext) {
@@ -127,7 +133,7 @@ public class MainSims {
         String[]    sendToFactory   =   line.split(" ");
 
         if (sendToFactory.length > 5){
-            System.out.println("Too many arguments on line "+ lineNb +". Plane will not be created.");
+            System.out.println("Too many arguments on line "+ lineNb +". Plane will not be created.\n");
         }else{
             String      type            =   sendToFactory[0];
             String      name            =   sendToFactory[1];
